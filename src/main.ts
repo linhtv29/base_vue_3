@@ -8,7 +8,7 @@ import type { VueQueryPluginOptions } from "@tanstack/vue-query";
 import App from "./App.vue";
 import router from "./router";
 
-import { initMocks } from "./test/server";
+import { initMocks } from "./mock/server";
 
 initMocks();
 
