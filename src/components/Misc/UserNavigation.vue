@@ -18,7 +18,7 @@ type UserNavigationItem = {
 };
 
 const userNavigation = [
-  { name: "Your Profile", to: "/app/profile" },
+  { name: "Your Profile", to: "/profile" },
   {
     name: "Sign out",
     to: "",

@@ -6,7 +6,7 @@
     "lib": ["ES2015", "DOM", "DOM.Iterable"],
     "composite": true,
     "baseUrl": ".",
-    "module": "es2015",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "es5",
     "experimentalDecorators": true,

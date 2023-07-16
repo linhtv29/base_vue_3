@@ -38,7 +38,7 @@ export const protectedPaths = [
 
 export const protectedRoutes = [
   {
-    path: "/app",
+    path: "/",
     component: MainLayout,
     children: protectedPaths,
   },

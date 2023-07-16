@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { RouterLink, useRoute } from "vue-router";
-import { FolderIcon, HomeIcon, UsersIcon } from "@heroicons/vue/24/outline";
+import { HomeIcon, UsersIcon } from "@heroicons/vue/24/outline";
 import { useAuthorization, ROLES } from "@/composables/useAuthorization";
+import type { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
 type SideNavigationItem = {
   name: string;
   to: string;
+  icon?:  FunctionalComponent<HTMLAttributes & VNodeProps, {}, any>;
 };
 
 const { checkAccess } = useAuthorization();
 
 const navigation = [
   { name: "Dashboard", to: { name: "dashboard" }, icon: HomeIcon },
-  { name: "Discussions", to: { name: "discussions" }, icon: FolderIcon },
   checkAccess({ allowedRoles: [ROLES.ADMIN] }) && {
     name: "Users",
     to: { name: "users" },
@@ -22,7 +23,7 @@ const navigation = [
 
 const currentRoute = useRoute();
 
-const isActive = (route) => {
+const isActive = (route: any) => {
   return route.name === "dashboard"
     ? currentRoute.path == route.path
     : currentRoute.path.startsWith(route.path);

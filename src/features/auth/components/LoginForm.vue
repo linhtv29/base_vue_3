@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 
-import { toFormValidator } from "@vee-validate/zod";
+import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
 
 import { BaseButton } from "@/components/Elements";
@@ -9,7 +9,7 @@ import { BaseForm, InputField } from "@/components/Form";
 
 import { useAuth } from "@/composables/useAuth";
 
-const validationSchema = toFormValidator(
+const validationSchema = toTypedSchema(
   z.object({
     email: z.string().min(1, "Required"),
     password: z.string().min(1, "Required"),

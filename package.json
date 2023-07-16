@@ -81,5 +81,6 @@
     "*.+(ts|tsx|vue)": [
       "npm run lint"
     ]
-  }
+  },
+  "license": "UNLICENSED"
 }
