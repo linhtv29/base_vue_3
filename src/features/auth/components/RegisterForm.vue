@@ -15,7 +15,6 @@ type RegisterFormProps = {
 };
 
 const props = defineProps<RegisterFormProps>();
-const chooseTeam = ref(false);
 
 const schema = z.object({
   email: z.string().min(1, "Required"),
@@ -24,13 +23,7 @@ const schema = z.object({
   password: z.string().min(1, "Required"),
 });
 
-const validationSchema = computed(() => {
-  return toTypedSchema(
-    chooseTeam.value
-      ? schema.and(z.object({ teamId: z.string().min(1, "Required") }))
-      : schema.and(z.object({ teamName: z.string().min(1, "Required") }))
-  );
-});
+const validationSchema = toTypedSchema(schema)
 
 const { register, isRegistering } = useAuth();
 type RegisterFormEmits = {

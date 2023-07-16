@@ -7,7 +7,7 @@ import LoginForm from "../components/LoginForm.vue";
 const router = useRouter();
 
 const onSuccess = () => {
-  router.push({ path: "/app" });
+  router.push({ path: "/" });
 };
 </script>
 
