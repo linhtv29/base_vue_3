@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { removeToken } from "@/utils/storage";
 import {
   Menu,
   MenuButton,
@@ -7,7 +8,6 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { UserIcon } from "@heroicons/vue/24/outline";
-import { logoutFn } from "@/composables/useAuth";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -17,11 +17,15 @@ type UserNavigationItem = {
   onClick?: () => void;
 };
 
+const logout = () => {
+  removeToken()
+  router.push({ name: "login" });
+}
 const userNavigation = [
   { name: "Your Profile", onClick: () => router.push({ name: "profile" }) },
   {
     name: "Sign out",
-    onClick: () => logoutFn(),
+    onClick: () => logout(),
   },
 ];
 </script>

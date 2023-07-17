@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { BaseButton, ConfirmationDialog } from "@/components/Elements";
 
-import { useAuthentication } from "@/composables/useAuthentication";
-import { useDeleteUser } from "../api/deleteUser";
+import { useAuthentication } from "@/hooks/useAuthentication";
+import { deleteUser } from "../api/deleteUser";
 
 type DeleteUserProps = {
   id: string;
@@ -11,17 +11,15 @@ type DeleteUserProps = {
 const props = defineProps<DeleteUserProps>();
 
 const {user} = useAuthentication();
-const { isLoading, isSuccess, mutateAsync } = useDeleteUser();
 
 async function onClick() {
-  await mutateAsync({ userId: props.id });
+  await deleteUser({ userId: props.id })
 }
 </script>
 
 <template>
   <ConfirmationDialog
     v-if="user?.id !== id"
-    :isDone="isSuccess"
     icon="danger"
     title="Delete User"
     body="Are you sure you want to delete this user?"
@@ -32,7 +30,6 @@ async function onClick() {
     <template #confirmButton>
       <BaseButton
         @click="onClick"
-        :isLoading="isLoading"
         type="button"
         class="bg-red-600"
       >

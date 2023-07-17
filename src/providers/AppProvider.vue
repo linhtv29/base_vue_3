@@ -1,22 +1,23 @@
 <script setup lang="tsx">
-import VErrorBoundary from "vue-error-boundary";
-
-import { ErrorFallback } from "@/components/Error";
 import { AppNotifications } from "@/components/Notifications";
 import { AuthProvider } from "@/providers";
 import { useLoading } from "@/stores/loadingSpinner";
+import { BaseSpinner } from "@/components/Elements";
 
 const loadingState = useLoading();
 </script>
 
 <template>
-  <VErrorBoundary :fall-back="ErrorFallback">
-    <AppNotifications />
-    <div v-if="loadingState.isLoading" class="w-screen h-screen flex justify-center items-center">
+  <AppNotifications />
+  <div
+    class="fixed top-0 left-0 bg-white bg-opacity-25 z-50"
+    v-if="loadingState.isLoading"
+  >
+    <div class="w-screen h-screen flex justify-center items-center">
       <BaseSpinner size="xl" />
     </div>
-    <AuthProvider>
-      <slot></slot>
-    </AuthProvider>
-  </VErrorBoundary>
+  </div>
+  <AuthProvider>
+    <slot></slot>
+  </AuthProvider>
 </template>

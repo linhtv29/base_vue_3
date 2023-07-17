@@ -16,6 +16,7 @@ export const useAuthorization = () => {
 
   const checkAccess = ({ allowedRoles }: { allowedRoles: RoleTypes[] }) => {
     if (allowedRoles && allowedRoles.length > 0) {
+      if(!user.value) return false
       return allowedRoles?.includes(user.value.role);
     }
 

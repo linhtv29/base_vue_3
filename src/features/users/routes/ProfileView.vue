@@ -4,7 +4,7 @@ import { ContentLayout } from "@/components/Layout";
 import ProfileEntry from "../components/ProfileEntry.vue";
 import UpdateProfile from "../components/UpdateProfile.vue";
 
-import { useAuthentication } from "@/composables/useAuthentication";
+import { useAuthentication } from "@/hooks/useAuthentication";
 
 const {user} = useAuthentication();
 </script>

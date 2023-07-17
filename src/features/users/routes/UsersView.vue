@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ContentLayout } from "@/components/Layout";
 import { AuthorizationProvider } from "@/providers";
-import { ROLES } from "@/composables/useAuthorization";
+import { ROLES } from "@/hooks/useAuthorization";
 
 import UsersList from "../components/UserList.vue";
 </script>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 
 import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
@@ -7,8 +7,12 @@ import { z } from "zod";
 import { BaseButton } from "@/components/Elements";
 import { BaseForm, InputField } from "@/components/Form";
 
-import { loginFn } from "@/composables/useAuth";
+import { loginWithEmailAndPassword, type LoginCredentialsDTO } from "..";
+import { useLoading } from "@/stores/loadingSpinner";
+import { setAuthInfo } from "@/utils/storage";
 
+const router = useRouter();
+const loadingState = useLoading();
 const validationSchema = toTypedSchema(
   z.object({
     email: z.string().min(1, "Required"),
@@ -16,15 +20,26 @@ const validationSchema = toTypedSchema(
   })
 );
 
-
 type LoginFormEmits = {
   (e: "success"): void;
 };
 
 const emits = defineEmits<LoginFormEmits>();
 
-async function onSubmit(values) {
-  await loginFn(values);
+const login = async (values: LoginCredentialsDTO) => {
+  try {
+    loadingState.isLoading = true;
+    const response = await loginWithEmailAndPassword(values);
+    setAuthInfo(response);
+    router.push({name: "home"});
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loadingState.isLoading = false;
+  }
+};
+async function onSubmit(values: LoginCredentialsDTO) {
+  await login(values);
   emits("success");
 }
 </script>
@@ -34,9 +49,7 @@ async function onSubmit(values) {
     <InputField name="email" type="email" label="Email Address" />
     <InputField name="password" type="password" label="Password" />
     <div>
-      <BaseButton type="submit" class="w-full">
-        Log in
-      </BaseButton>
+      <BaseButton type="submit" class="w-full"> Log in </BaseButton>
     </div>
   </BaseForm>
   <div class="mt-2 flex items-center justify-end">

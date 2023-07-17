@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toFormValidator } from "@vee-validate/zod";
+import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
 
 import { PencilIcon } from "@heroicons/vue/20/solid";
@@ -12,10 +12,9 @@ import {
   TextareaField,
 } from "@/components/Form";
 
-import { useAuthentication } from "@/composables/useAuthentication";
-import { useUpdateProfile } from "../api/updateProfile";
+import { useAuthentication } from "@/hooks/useAuthentication";
 
-const validationSchema = toFormValidator(
+const validationSchema = toTypedSchema(
   z.object({
     email: z.string().min(1, "Required"),
     firstName: z.string().min(1, "Required"),
@@ -25,15 +24,13 @@ const validationSchema = toFormValidator(
 );
 
 const {user} = useAuthentication();
-const { isLoading, isSuccess, mutateAsync } = useUpdateProfile();
 
-async function onSubmit(values) {
-  await mutateAsync({ data: values });
+async function onSubmit(values: any) {
 }
 </script>
 
 <template>
-  <FormDrawer title="Update Profile" :isDone="isSuccess">
+  <FormDrawer title="Update Profile">
     <template #triggerButton>
       <BaseButton size="sm">
         <template #startIcon>
@@ -47,7 +44,6 @@ async function onSubmit(values) {
         type="submit"
         form="update-profile"
         size="sm"
-        :isLoading="isLoading"
       >
         Submit
       </BaseButton>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, useRoute } from "vue-router";
 import { HomeIcon, UsersIcon } from "@heroicons/vue/24/outline";
-import { useAuthorization, ROLES } from "@/composables/useAuthorization";
+import { useAuthorization, ROLES } from "@/hooks/useAuthorization";
 import type { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
 type SideNavigationItem = {

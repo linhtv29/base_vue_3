@@ -3,10 +3,6 @@ import { MainLayout } from "@/components/Layout";
 const DashboardView = () => import("@/features/misc/routes/DashboardView.vue");
 const UsersView = () => import("@/features/users/routes/UsersView.vue");
 const ProfileView = () => import("@/features/users/routes/ProfileView.vue");
-const DiscussionsView = () =>
-  import("@/features/discussions/routes/DiscussionsView.vue");
-const DiscussionView = () =>
-  import("@/features/discussions/routes/DiscussionView.vue");
 
 export const protectedPaths = [
   {
@@ -20,16 +16,6 @@ export const protectedPaths = [
     component: UsersView,
   },
   {
-    path: "discussions",
-    name: "discussions",
-    component: DiscussionsView,
-  },
-  {
-    path: "discussions/:id",
-    name: "discussion",
-    component: DiscussionView,
-  },
-  {
     path: "profile",
     name: "profile",
     component: ProfileView,
@@ -39,6 +25,7 @@ export const protectedPaths = [
 export const protectedRoutes = [
   {
     path: "/",
+    name: "home",
     component: MainLayout,
     children: protectedPaths,
   },

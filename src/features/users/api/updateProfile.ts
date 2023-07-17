@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/vue-query";
 
-import { useAuth } from "@/composables/useAuth";
 import { axios } from "@/lib/axios";
 
 import type { MutationConfig } from "@/lib/vue-query";
@@ -26,7 +25,6 @@ type UseUpdateProfileOptions = {
 
 export const useUpdateProfile = ({ config }: UseUpdateProfileOptions = {}) => {
   const store = useNotificationStore();
-  const { refetchUser } = useAuth();
 
   return useMutation({
     onSuccess: () => {
@@ -34,7 +32,6 @@ export const useUpdateProfile = ({ config }: UseUpdateProfileOptions = {}) => {
         type: "success",
         title: "User Updated",
       });
-      refetchUser.value();
     },
     ...config,
     mutationFn: updateProfile,

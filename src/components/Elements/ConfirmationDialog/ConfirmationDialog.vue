@@ -7,7 +7,7 @@ import {
 
 import { BaseDialog, BaseDialogTitle } from "@/components/Elements/BaseDialog";
 import { BaseButton } from "@/components/Elements";
-import { useDisclosure } from "@/composables/useDisclosure";
+import { useDisclosure } from "@/hooks/useDisclosure";
 
 type ConfirmationDialogProps = {
   icon?: "danger" | "info";

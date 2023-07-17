@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 
 import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
 
 import { BaseButton } from "@/components/Elements";
-import { BaseForm, InputField, SelectField } from "@/components/Form";
+import { BaseForm, InputField } from "@/components/Form";
 
-import { useAuth } from "@/composables/useAuth";
+import { registerWithEmailAndPassword } from "..";
 
 type RegisterFormProps = {
   onSuccess: () => void;
@@ -23,16 +22,23 @@ const schema = z.object({
   password: z.string().min(1, "Required"),
 });
 
-const validationSchema = toTypedSchema(schema)
+const validationSchema = toTypedSchema(schema);
 
-const { register, isRegistering } = useAuth();
 type RegisterFormEmits = {
   (e: "success"): void;
 };
 
 const emits = defineEmits<RegisterFormEmits>();
 
-async function onSubmit(values) {
+const register = async (values: any) => {
+  try {
+    await registerWithEmailAndPassword(values);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+async function onSubmit(values: any) {
   await register(values);
   emits("success");
 }
@@ -46,9 +52,7 @@ async function onSubmit(values) {
       <InputField name="email" type="email" label="Email Address" />
       <InputField name="password" type="password" label="Password" />
       <div>
-        <BaseButton type="submit" :isLoading="isRegistering" class="w-full">
-          Register
-        </BaseButton>
+        <BaseButton type="submit" class="w-full"> Register </BaseButton>
       </div>
     </BaseForm>
     <div class="mt-2 flex items-center justify-end">

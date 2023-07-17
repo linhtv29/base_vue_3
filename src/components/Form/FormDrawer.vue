@@ -1,6 +1,6 @@
 <script lang="ts">
 import { cloneVNode, useSlots, watchEffect } from "vue";
-import { useDisclosure } from "@/composables/useDisclosure";
+import { useDisclosure } from "@/hooks/useDisclosure";
 import {
   BaseButton,
   BaseDrawer,
@@ -15,7 +15,6 @@ const slots = useSlots();
 type FormDrawerProps = {
   title: string;
   size?: BaseDrawerProps["size"];
-  isDone: boolean;
 };
 
 const props = withDefaults(defineProps<FormDrawerProps>(), {
@@ -28,11 +27,6 @@ const triggerButton = cloneVNode(elements[0], {
   onClick: () => open(),
 });
 
-watchEffect(() => {
-  if (props.isDone) {
-    close();
-  }
-});
 </script>
 
 <template>

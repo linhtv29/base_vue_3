@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ContentLayout } from "@/components/Layout";
-import { useAuthentication } from "@/composables/useAuthentication";
+import { useAuthentication } from "@/hooks/useAuthentication";
 
 const {user} = useAuthentication();
 </script>
