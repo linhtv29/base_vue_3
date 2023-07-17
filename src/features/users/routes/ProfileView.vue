@@ -4,9 +4,9 @@ import { ContentLayout } from "@/components/Layout";
 import ProfileEntry from "../components/ProfileEntry.vue";
 import UpdateProfile from "../components/UpdateProfile.vue";
 
-import { useAuth } from "@/composables/useAuth";
+import { useAuthentication } from "@/composables/useAuthentication";
 
-const { user } = useAuth();
+const {user} = useAuthentication();
 </script>
 
 <template>

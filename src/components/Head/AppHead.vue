@@ -8,7 +8,7 @@ type HeadProps = {
 
 defineProps<HeadProps>();
 
-const defaultTitle = "Base Vue";
+const defaultTitle = "Mequy Pro";
 </script>
 
 <template>

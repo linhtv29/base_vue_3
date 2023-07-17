@@ -7,24 +7,23 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { UserIcon } from "@heroicons/vue/24/outline";
-import { useAuth } from "@/composables/useAuth";
+import { logoutFn } from "@/composables/useAuth";
+import { useRouter } from "vue-router";
 
-const { logout } = useAuth();
+const router = useRouter();
 
 type UserNavigationItem = {
   name: string;
-  to: string;
   onClick?: () => void;
 };
 
 const userNavigation = [
-  { name: "Your Profile", to: "/profile" },
+  { name: "Your Profile", onClick: () => router.push({ name: "profile" }) },
   {
     name: "Sign out",
-    to: "",
-    onClick: () => logout(),
+    onClick: () => logoutFn(),
   },
-].filter(Boolean) as UserNavigationItem[];
+];
 </script>
 
 <template>
@@ -53,15 +52,15 @@ const userNavigation = [
           v-for="item in userNavigation"
           v-slot="{ active }"
           :key="item.name"
+          as="div"
         >
-          <RouterLink
+          <div
             @click="item.onClick"
-            :to="item.to"
             :class="{ 'bg-gray-100': active }"
             class="block px-4 py-2 text-sm text-gray-700"
           >
             {{ item.name }}
-          </RouterLink>
+          </div>
         </MenuItem>
       </MenuItems>
     </TransitionRoot>

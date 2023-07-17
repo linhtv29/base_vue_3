@@ -12,7 +12,7 @@ import {
   TextareaField,
 } from "@/components/Form";
 
-import { useAuth } from "@/composables/useAuth";
+import { useAuthentication } from "@/composables/useAuthentication";
 import { useUpdateProfile } from "../api/updateProfile";
 
 const validationSchema = toFormValidator(
@@ -24,7 +24,7 @@ const validationSchema = toFormValidator(
   })
 );
 
-const { user } = useAuth();
+const {user} = useAuthentication();
 const { isLoading, isSuccess, mutateAsync } = useUpdateProfile();
 
 async function onSubmit(values) {

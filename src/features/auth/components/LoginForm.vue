@@ -7,7 +7,7 @@ import { z } from "zod";
 import { BaseButton } from "@/components/Elements";
 import { BaseForm, InputField } from "@/components/Form";
 
-import { useAuth } from "@/composables/useAuth";
+import { loginFn } from "@/composables/useAuth";
 
 const validationSchema = toTypedSchema(
   z.object({
@@ -16,7 +16,6 @@ const validationSchema = toTypedSchema(
   })
 );
 
-const { login, isLoggingIn } = useAuth();
 
 type LoginFormEmits = {
   (e: "success"): void;
@@ -25,7 +24,7 @@ type LoginFormEmits = {
 const emits = defineEmits<LoginFormEmits>();
 
 async function onSubmit(values) {
-  await login(values);
+  await loginFn(values);
   emits("success");
 }
 </script>
@@ -35,7 +34,7 @@ async function onSubmit(values) {
     <InputField name="email" type="email" label="Email Address" />
     <InputField name="password" type="password" label="Password" />
     <div>
-      <BaseButton type="submit" class="w-full" :isLoading="isLoggingIn">
+      <BaseButton type="submit" class="w-full">
         Log in
       </BaseButton>
     </div>

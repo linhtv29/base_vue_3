@@ -11,7 +11,7 @@ import type {
   RegisterCredentialsDTO,
   AuthUser,
 } from "@/features/auth";
-import storage, { setCookie } from "@/utils/storage";
+import storage, { getCookie, removeToken, setAuthInfo } from "@/utils/storage";
 
 import { initVueQueryAuth } from "@/lib/vue-query-auth";
 
@@ -34,9 +34,7 @@ async function loadUser() {
 
 async function loginFn(data: LoginCredentialsDTO) {
   const response = await loginWithEmailAndPassword(data);
-  const user = await handleUserResponse(response);
-  setCookie("userAuth", JSON.stringify(response));
-  return user;
+  setAuthInfo(response);
 }
 
 async function registerFn(data: RegisterCredentialsDTO) {
@@ -45,14 +43,11 @@ async function registerFn(data: RegisterCredentialsDTO) {
   return user;
 }
 
-async function logoutFn() {
-  storage.clearToken();
+function logoutFn() {
+  removeToken()
   window.location.assign(window.location.origin as unknown as string);
 }
 
-function isAuthenticated() {
-  return !!storage.getToken();
-}
 
 const authConfig = {
   loadUser,
@@ -88,4 +83,4 @@ function useAuth() {
   return inject(key);
 }
 
-export { provideAuth, useAuth, isAuthenticated };
+export { provideAuth, useAuth, loginFn, logoutFn };

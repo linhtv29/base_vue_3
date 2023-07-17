@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { BaseButton, ConfirmationDialog } from "@/components/Elements";
 
-import { useAuth } from "@/composables/useAuth";
+import { useAuthentication } from "@/composables/useAuthentication";
 import { useDeleteUser } from "../api/deleteUser";
 
 type DeleteUserProps = {
@@ -10,7 +10,7 @@ type DeleteUserProps = {
 
 const props = defineProps<DeleteUserProps>();
 
-const { user } = useAuth();
+const {user} = useAuthentication();
 const { isLoading, isSuccess, mutateAsync } = useDeleteUser();
 
 async function onClick() {

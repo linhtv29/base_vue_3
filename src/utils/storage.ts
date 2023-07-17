@@ -1,3 +1,5 @@
+import type { AuthUser, UserResponse } from "@/features/auth";
+
 const storagePrefix = "base_vue";
 
 const storage = {
@@ -27,7 +29,7 @@ export function getCookie(name: string): string | null {
   return null;
 }
 
-export function setCookie(name: string, value: string, days: number = 0): void {
+export function setCookie(name: string, value: string, days: number): void {
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
   const expires = "expires=" + date.toUTCString();
@@ -36,4 +38,30 @@ export function setCookie(name: string, value: string, days: number = 0): void {
 
 export function deleteCookie(name: string): void {
   document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+export function setAuthInfo(value: UserResponse): void {
+  setCookie("authUser", JSON.stringify(value), 1);
+}
+
+export function getUserInfo(): AuthUser | null {
+  console.log(isAuthenticated());
+  if(isAuthenticated()){
+    console.log('pass');
+    return JSON.parse(getCookie("authUser") as string).user;
+  }
+  return null
+}
+export function getToken(): string | null {
+  if(isAuthenticated()){
+    return JSON.parse(getCookie("authUser") as string).jwt;
+  }
+  return null
+}
+
+export function removeToken(): void {
+  deleteCookie("authUser");
+}
+function isAuthenticated() {
+  return !!getCookie("authUser");
 }

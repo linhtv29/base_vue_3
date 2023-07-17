@@ -1,14 +1,16 @@
 <script lang="ts">
 import router from "@/router";
 import { protectedPaths } from "@/router/protected";
-import { isAuthenticated } from "@/composables/useAuth";
+import { useAuthentication } from "@/composables/useAuthentication";
 
+const {isAuthenticated} = useAuthentication();
 const isProtected = (name) => {
   return protectedPaths.find((c) => c.name === name);
 };
 
 router.beforeEach((to, from, next) => {
-  if (isProtected(to.name) && !isAuthenticated()) {
+  if (isProtected(to.name) && !isAuthenticated.value) {
+    console.log('out');
     next({ name: "login" });
   } else {
     next();
