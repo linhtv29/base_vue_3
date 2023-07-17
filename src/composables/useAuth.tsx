@@ -11,7 +11,7 @@ import type {
   RegisterCredentialsDTO,
   AuthUser,
 } from "@/features/auth";
-import storage from "@/utils/storage";
+import storage, { setCookie } from "@/utils/storage";
 
 import { initVueQueryAuth } from "@/lib/vue-query-auth";
 
@@ -35,6 +35,7 @@ async function loadUser() {
 async function loginFn(data: LoginCredentialsDTO) {
   const response = await loginWithEmailAndPassword(data);
   const user = await handleUserResponse(response);
+  setCookie("userAuth", JSON.stringify(response));
   return user;
 }
 
